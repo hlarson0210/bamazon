@@ -1,4 +1,4 @@
-# bamazon
+# bAmazon CLI 
 # 
 
 
