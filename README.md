@@ -17,7 +17,9 @@ This app is organized through various .js files calling different funciotns to r
 
 [video demonstration of bAmazon](https://youtu.be/ACncSQxfDbw)
 
-
+## Technology Used
+This app uses the following technologies:
+    * h
 
 ## Role
 Sole developer for this application.
