@@ -19,7 +19,12 @@ This app is organized through various .js files calling different funciotns to r
 
 ## Technology Used
 This app uses the following technologies:
-    * h
+    * Node.js
+        * Packages used
+            * Inquirer
+            * MySQL
+            * console.table
+            * dotenv
 
 ## Role
 Sole developer for this application.
