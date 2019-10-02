@@ -8,7 +8,6 @@ var connection = mysql.createConnection(credentials.mySQL);
 
 connection.connect(function (err, res) {
     if (err) throw err;
-    console.log("Connected! ", connection.threadId);
     runIt();
 });
 
