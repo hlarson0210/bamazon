@@ -30,7 +30,7 @@ function managerQues() {
                 lowInventory();
                 break;
             case "Add to Inventory":
-                addInventory();
+                viewTable();
                 break;
             case "Add New Product":
                 addNewProd();
@@ -63,43 +63,53 @@ function lowInventory() {
     );
 }
 
-function addInventory() {
+function viewTable() {
     connection.query(
-        "SELECT product_name FROM products",
+        "SELECT * FROM products",
         function (err, res) {
             if (err) throw err;
-            var choicesArr = [];
-            for (var i = 0; i < res.length; i++){
-                
-            }
-            console.log(res);
+            console.table(res);
+            // console.log(res[0].stock_quantity);
+            addInventory(res);
         }
     );
+}
+
+function addInventory() {
     inquirer.prompt([{
-        type: "list",
-        message: "What item would you like to add?",
-        // choices: "SELECT product_name FROM products",
-        name: "choice"
+        type: "number",
+        message: "What product would you like to add to inventory? (Choose using the item_id number)",
+        name: "productId"
     }, {
         type: "number",
         message: "How many would you like to add?",
-        name: "addedQty"
-    },
-    ]).then(function (answer) {
-        console.log(answer);
-        connection.query(
-            "UPDATE products SET stock_quantity = ? WHERE item_id = ?", [orderMore, prodId],
-            function (err, res) {
-                if (err) throw err;
-                console.log("\nQuanitiy added: " + orderMore + " added.\n")
-                console.table(res);
-                managerQues();
-            },
-        );
-    });
+        name: "quantity"
+    }]).then(answers => {
+        getProductInfo(answers);
+    })
+}
+
+function getProductInfo(dataObj) {
+    connection.query("SELECT stock_quantity, product_name FROM products WHERE item_id = ?", dataObj.productId, (error, data) => {
+        if (error) throw error;
+        if (data.length === 0) {
+            console.log("\nPlease select a valid item_id!\n")
+            addInventory();
+        } else {
+            let newQty = data[0].stock_quantity + dataObj.quantity;
+            updateProduct(dataObj.quantity, dataObj.productId, newQty, data[0].product_name);
+        }
+    })
+}
+
+function updateProduct(qty, prodId, newQty, item) {
+    connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?", [newQty, prodId], (error, data) => {
+        if (error) throw error;
+        console.log("\nSuccessfully added " + qty + " to " + item + "'s inventory!\n");
+        managerQues();
+    })
 }
 
 function addNewProd(orderMore, prodId) {
 
 }
-
