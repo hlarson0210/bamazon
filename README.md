@@ -15,7 +15,7 @@ This app is organized through various .js files calling different funciotns to r
     ii. `node bamazonManager.js`
 5. Once you select the .js file you want to run, the app will print to the command line with prompts to guide you
 
-![](https://youtu.be/ACncSQxfDbw)
+[video demonstration of bAmazon](https://youtu.be/ACncSQxfDbw)
 
 ## Technology Used
 This app uses the following technologies:
